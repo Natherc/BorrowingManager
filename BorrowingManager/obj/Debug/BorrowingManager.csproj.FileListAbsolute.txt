@@ -1,1 +1,17 @@
 d:\documents\visual studio 2015\Projects\BorrowingManager\BorrowingManager\bin\Debug\BorrowingManager.exe.config
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\bin\Debug\borrowingManagerDB.mdf
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\bin\Debug\borrowingManagerDB_log.ldf
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\bin\Debug\BorrowingManager.exe
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\bin\Debug\BorrowingManager.pdb
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\BorrowingManager.csprojResolveAssemblyReference.cache
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\App.g.cs
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\BorrowingManager_Content.g.cs
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\BorrowingManager_MarkupCompile.cache
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\BorrowingManager_MarkupCompile.lref
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\BorrowingManager.g.resources
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\BorrowingManager.Properties.Resources.resources
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\BorrowingManager.csproj.GenerateResource.Cache
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\BorrowingManager.exe
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\BorrowingManager.pdb
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\mainwindow.g.cs
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\mainwindow.baml

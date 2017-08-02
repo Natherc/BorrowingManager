@@ -70,7 +70,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="BorrowingManager.xaml">
+    <Page Include="mainwindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -78,8 +78,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BorrowingManager.xaml.cs">
-      <DependentUpon>BorrowingManager.xaml</DependentUpon>
+    <Compile Include="mainwindow.xaml.cs">
+      <DependentUpon>mainwindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

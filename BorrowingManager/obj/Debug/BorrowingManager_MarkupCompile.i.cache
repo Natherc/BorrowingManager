@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-d:\documents\visual studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\
 BorrowingManager
 none
 false
 DEBUG;TRACE
-d:\documents\visual studio 2015\Projects\BorrowingManager\BorrowingManager\App.xaml
-11919762732
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\App.xaml
+11150301917
 22138204672
-91163805448
+91236052012
 13738642453
-BorrowingManager.xaml;
+mainwindow.xaml;
 
-False
+True
 

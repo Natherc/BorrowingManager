@@ -1,0 +1,14 @@
+﻿<Window x:Name="MainWindow1" x:Class="BorrowingManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BorrowingManager"
+        mc:Ignorable="d"
+        Title="BorrowManager" Height="514.018" Width="884.919">
+    <Grid x:Name="windowGrid">
+        <DataGrid x:Name="dataTerritory" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="432" Width="244"/>
+        <Label x:Name="connectLabel" Content="" HorizontalAlignment="Left" Margin="10,447,0,0" VerticalAlignment="Top" Width="858" FontFamily="Sitka Small" Height="30"/>
+
+    </Grid>
+</Window>
