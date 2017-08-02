@@ -70,7 +70,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Territory.cs" />
     <Page Include="mainwindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -131,6 +130,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>borrowingManagerDB.mdf</DependentUpon>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BorrowingManagerLibrary\BorrowingManagerLibrary.csproj">
+      <Project>{EA746A34-E4B7-46DE-9AB4-C0E2DF4DF0B9}</Project>
+      <Name>BorrowingManagerLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

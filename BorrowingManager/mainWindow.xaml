@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="BorrowManager" Height="514.018" Width="884.919">
     <Grid x:Name="windowGrid">
-        <DataGrid x:Name="dataTerritory" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="432" Width="244"/>
+        <DataGrid x:Name="dataTerritory" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="420"/>
         <Label x:Name="connectLabel" Content="" HorizontalAlignment="Left" Margin="10,447,0,0" VerticalAlignment="Top" Width="858" FontFamily="Sitka Small" Height="30"/>
 
     </Grid>

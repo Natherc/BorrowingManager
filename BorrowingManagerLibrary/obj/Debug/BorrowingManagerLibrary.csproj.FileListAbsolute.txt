@@ -1,0 +1,5 @@
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManagerLibrary\bin\Debug\BorrowingManagerLibrary.dll
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManagerLibrary\bin\Debug\BorrowingManagerLibrary.pdb
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManagerLibrary\obj\Debug\BorrowingManagerLibrary.csprojResolveAssemblyReference.cache
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManagerLibrary\obj\Debug\BorrowingManagerLibrary.dll
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManagerLibrary\obj\Debug\BorrowingManagerLibrary.pdb
