@@ -41,8 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogic\TerritoryBusinessLogic.cs" />
+    <Compile Include="BusinessLogic\UserBusinessLogic.cs" />
     <Compile Include="DataLayer\TerritoryDataLayer.cs" />
+    <Compile Include="DataLayer\UserDataLayer.cs" />
     <Compile Include="Model\Territory.cs" />
+    <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
