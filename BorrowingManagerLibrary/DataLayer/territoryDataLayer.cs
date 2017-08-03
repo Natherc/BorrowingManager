@@ -77,16 +77,13 @@ namespace BorrowingManagerLibrary.DataLayer
             SqlConnection con = new SqlConnection();
             con.ConnectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Documents\\Visual Studio 2015\\Projects\\BorrowingManager\\BorrowingManager\\borrowingManagerDB.mdf\"; Integrated Security = True";
             con.Open();
-            string query = "INSERT INTO dbo.Territory (Number,Locality,CreationDate) VALUES (@number,@locality,@CreationDate);SELECT SCOPE_IDENTITY();";
+            string query = "INSERT INTO dbo.Territory (Number,Locality,CreationDate,PathImage) VALUES (@number,@locality,@CreationDate,@PathImage);SELECT SCOPE_IDENTITY();";
             SqlCommand comm = new SqlCommand(query, con);
-            //SqlParameter outputIdParam = new SqlParameter("@Id", SqlDbType.Int)
-            //{
-            //    Direction = ParameterDirection.Output
-            //};
-            //comm.Parameters.Add(outputIdParam);
+         
             comm.Parameters.Add(new SqlParameter("@number", t.Number));
             comm.Parameters.Add(new SqlParameter("@locality", t.Locality));
             comm.Parameters.Add(new SqlParameter("@CreationDate", t.CreationDate));
+            comm.Parameters.Add(new SqlParameter("@PathImage", t.PathImage));
 
             id = Convert.ToInt32(comm.ExecuteScalar());
 

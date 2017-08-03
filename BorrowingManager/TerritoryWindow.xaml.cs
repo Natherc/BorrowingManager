@@ -1,5 +1,6 @@
 ﻿using BorrowingManagerLibrary.BusinessLogic;
 using BorrowingManagerLibrary.Models;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace BorrowingManager
     {
         public bool HasClosedAfterHitButtonSave { get;  set; }
 
+        Territory t = new Territory();
+
         public territoryWindow()
         {
             InitializeComponent();
@@ -38,7 +41,7 @@ namespace BorrowingManager
         {
             TerritoryBusinessLogic bll = new TerritoryBusinessLogic();
 
-            Territory t = new Territory();
+            
             t.Number = txtNumber.Text;
             t.Locality = txtLocality.Text;
             ResultViewModel result = bll.Insert(t);
@@ -64,6 +67,20 @@ namespace BorrowingManager
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             HasClosedAfterHitButtonSave = false;
+        }
+
+        private void btnImageTerritory_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog op = new OpenFileDialog();
+            op.Title = "Select a picture";
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+              "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+              "Portable Network Graphic (*.png)|*.png";
+            if(op.ShowDialog() == true)
+            {
+                t.PathImage = op.FileName;
+            }
+           
         }
     }
 }

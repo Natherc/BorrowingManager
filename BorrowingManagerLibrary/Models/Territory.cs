@@ -16,6 +16,7 @@ namespace BorrowingManagerLibrary.Models
         public string Locality { get; set; }
         public DateTime CreationDate{ get; set; }
         public int Id { get; set; }
+        public string PathImage { get; set;}
     }
 }
     
