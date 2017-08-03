@@ -31,6 +31,10 @@ namespace BorrowingManagerLibrary.DataLayer
                 territory.CreationDate = (DateTime)sdr["CreationDate"];
                 territory.Locality = (String)sdr["Locality"];
                 territory.Number = (String)sdr["Number"];
+                if (!DBNull.Value.Equals(sdr["PathImage"]))
+                {
+                    territory.PathImage = (string)sdr["PathImage"];
+                }
             }
 
             con.Close();
@@ -59,6 +63,11 @@ namespace BorrowingManagerLibrary.DataLayer
                     territory.CreationDate = (DateTime)sdr["CreationDate"];
                     territory.Locality = (String)sdr["Locality"];
                     territory.Number = (String)sdr["Number"];
+                    if (!DBNull.Value.Equals(sdr["PathImage"]))
+                    {
+                        territory.PathImage = (string)sdr["PathImage"];
+                    }
+                    
                     territories.Add(territory);
                 }
                 
@@ -100,13 +109,14 @@ namespace BorrowingManagerLibrary.DataLayer
             SqlConnection con = new SqlConnection();
             con.ConnectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Documents\\Visual Studio 2015\\Projects\\BorrowingManager\\BorrowingManager\\borrowingManagerDB.mdf\"; Integrated Security = True";
             con.Open();
-            string query = "UPDATE dbo.Territory SET Number=@number,Locality=@locality,CreationDate=@CreationDate WHERE Id = @id;";
+            string query = "UPDATE dbo.Territory SET Number=@number,Locality=@locality,CreationDate=@CreationDate,PathImage=@PathImage WHERE Id = @id;";
             SqlCommand comm = new SqlCommand(query, con);
 
             comm.Parameters.Add(new SqlParameter("@id", t.Id));
             comm.Parameters.Add(new SqlParameter("@number", t.Number));
             comm.Parameters.Add(new SqlParameter("@locality", t.Locality));
             comm.Parameters.Add(new SqlParameter("@CreationDate", t.CreationDate));
+            comm.Parameters.Add(new SqlParameter("@PathImage", t.PathImage));
 
             result = comm.ExecuteNonQuery();
 

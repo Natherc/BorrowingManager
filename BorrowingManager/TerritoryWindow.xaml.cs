@@ -23,8 +23,20 @@ namespace BorrowingManager
     public partial class territoryWindow : Window, IDisposable
     {
         public bool HasClosedAfterHitButtonSave { get;  set; }
+        public Territory Territory { get; set;}
 
-        Territory t = new Territory();
+        public bool IsUpdate
+        {
+            get
+            {
+                if (Territory != null)
+                    return true;
+
+                return false;
+            }
+        }
+
+        
 
         public territoryWindow()
         {
@@ -41,21 +53,33 @@ namespace BorrowingManager
         {
             TerritoryBusinessLogic bll = new TerritoryBusinessLogic();
 
-            
-            t.Number = txtNumber.Text;
-            t.Locality = txtLocality.Text;
-            ResultViewModel result = bll.Insert(t);
-            if (result.Succes)
+            Territory.Number = txtNumber.Text;
+            Territory.Locality = txtLocality.Text;
+
+            ResultViewModel result = new ResultViewModel(); ;
+
+            if (IsUpdate)
             {
-                HasClosedAfterHitButtonSave = true;
-                this.Close();
+                
+                result = bll.Update(Territory);
             }
             else
             {
-                MessageBox.Show(result.ErrorMessage);
+               result  = bll.Insert(Territory);
             }
-            
-            
+           
+                
+                
+
+                if (result.Succes)
+                {
+                    HasClosedAfterHitButtonSave = true;
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show(result.ErrorMessage);
+                }
 
         }
 
@@ -67,6 +91,15 @@ namespace BorrowingManager
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             HasClosedAfterHitButtonSave = false;
+            
+
+            if(Territory != null)
+            {
+                txtLocality.Text = Territory.Locality;
+                txtNumber.Text = Territory.Number;
+            }
+            
+
         }
 
         private void btnImageTerritory_Click(object sender, RoutedEventArgs e)
@@ -78,7 +111,11 @@ namespace BorrowingManager
               "Portable Network Graphic (*.png)|*.png";
             if(op.ShowDialog() == true)
             {
-                t.PathImage = op.FileName;
+                if (!IsUpdate)
+                {
+                    Territory = new Territory();
+                }
+                Territory.PathImage = op.FileName;
             }
            
         }

@@ -52,38 +52,37 @@ namespace BorrowingManagerLibrary.BusinessLogic
             return r;
         }
 
-        public void Update(Territory t)
+        public ResultViewModel Update(Territory t)
         {
+            ResultViewModel r = new ResultViewModel();
+
             if (t != null)
             {
-                if (!string.IsNullOrEmpty(t.Number) && t.Number.Length < 3)
+                if (!string.IsNullOrEmpty(t.Number))
                 {
                     if (!string.IsNullOrEmpty(t.Locality))
                     {
-                        if (t.CreationDate != DateTime.MinValue)
-                        {
-                             _territoryDL.Update(t);
-                        }
-                        else
-                        {
-                            throw new Exception("CreationDate cannot be empty");
-                        }
+                        t.CreationDate = DateTime.Now;
+                         _territoryDL.Update(t);
+                        r.Succes = true;
+
                     }
                     else
                     {
-                        throw new Exception("Locality cannot be empty");
+                        r.ErrorMessage = "Locality cannot be empty";
                     }
                 }
                 else
                 {
-                    throw new Exception("Number cannot be empty");
+                    r.ErrorMessage = "Number cannot be empty";
                 }
             }
             else
             {
-                throw new Exception("Cannot insert null object");
+                r.ErrorMessage = "Cannot insert null object";
             }
-            
+            r.Tag = t;
+            return r;
         }
 
         public void Delete(int id)

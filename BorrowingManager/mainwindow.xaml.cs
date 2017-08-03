@@ -105,5 +105,33 @@ namespace BorrowingManager
             UpdateTerritoryGrid();
 
         }
+
+        private void UpdateItem_Click(object sender, RoutedEventArgs e)
+        {
+            using (territoryWindow frm = new territoryWindow())
+            {
+                var menuItem = (MenuItem) sender;
+
+                //Get the ContextMenu to which the menuItem belongs
+                var contextMenu = (ContextMenu) menuItem.Parent;
+
+                //Find the placementTarget
+                var item = (DataGrid) contextMenu.PlacementTarget;
+
+                //Get the underlying item, that you cast to your object that is bound
+                //to the DataGrid (and has subject and state as property)
+                var territoryToUpdate = (Territory)item.SelectedCells[0].Item;
+
+                frm.Owner = this;
+                frm.Territory = territoryToUpdate;
+                frm.ShowDialog();
+                if (frm.HasClosedAfterHitButtonSave)
+                {
+                    UpdateTerritoryGrid();
+
+                }
+                
+            }
+        }
     }
 }
