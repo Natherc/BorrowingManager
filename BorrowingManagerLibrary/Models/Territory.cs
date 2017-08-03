@@ -17,6 +17,7 @@ namespace BorrowingManagerLibrary.Models
         public DateTime CreationDate{ get; set; }
         public int Id { get; set; }
         public string PathImage { get; set;}
+        public bool IsDeleted { get; set; }
     }
 }
     

@@ -9,36 +9,35 @@ using System.Threading.Tasks;
 
 namespace BorrowingManagerLibrary.DataLayer
 {
-    public class UserDataLayer
+    public class UserDataLayer : DataLayer
     {
         public User GetById(int id)
         {
             User User = null;
 
-            SqlConnection con = new SqlConnection();
-            con.ConnectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Documents\\Visual Studio 2015\\Projects\\BorrowingManager\\BorrowingManager\\borrowingManagerDB.mdf\"; Integrated Security = True";
-            con.Open();
-            string query = "SELECT * FROM dbo.[User] WHERE id = @Id";
-            SqlCommand comm = new SqlCommand(query, con);
-            comm.Parameters.Add(new SqlParameter("@Id", id));
-            SqlDataReader sdr = comm.ExecuteReader();
-
-            if (sdr.HasRows)
+            using (SqlConnection con = GetConnection())
             {
-                User = new User();
-                sdr.Read();
-                User.Id = (int)sdr["Id"];
-                User.Lastname = (string)sdr["Lastname"];
-                User.Name = (string)sdr["Name"];
-                if (!DBNull.Value.Equals(sdr["Mail"]))
+                string query = "SELECT * FROM dbo.[User] WHERE id = @Id";
+                SqlCommand comm = new SqlCommand(query, con);
+                comm.Parameters.Add(new SqlParameter("@Id", id));
+                SqlDataReader sdr = comm.ExecuteReader();
+
+                if (sdr.HasRows)
                 {
-                    User.Mail = (string)sdr["Mail"];
+                    User = new User();
+                    sdr.Read();
+                    User.Id = (int)sdr["Id"];
+                    User.Lastname = (string)sdr["Lastname"];
+                    User.Name = (string)sdr["Name"];
+                    if (!DBNull.Value.Equals(sdr["Mail"]))
+                    {
+                        User.Mail = (string)sdr["Mail"];
+                    }
+                    User.IsDeleted = (bool)sdr["IsDeleted"];
+
                 }
 
             }
-
-            con.Close();
-            con.Dispose();
 
             return User;
         }
@@ -47,33 +46,32 @@ namespace BorrowingManagerLibrary.DataLayer
         {
             List<User> users = new List<User>();
 
-            SqlConnection con = new SqlConnection();
-            con.ConnectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Documents\\Visual Studio 2015\\Projects\\BorrowingManager\\BorrowingManager\\borrowingManagerDB.mdf\"; Integrated Security = True";
-            con.Open();
-            string query = "SELECT * FROM dbo.[User] WHERE IsDeleted = 0;";
-            SqlCommand comm = new SqlCommand(query, con);
-            SqlDataReader sdr = comm.ExecuteReader();
-
-            if (sdr.HasRows)
+            using (SqlConnection con = GetConnection())
             {
-                while (sdr.Read())
+                string query = "SELECT * FROM dbo.[User] WHERE IsDeleted = 0;";
+                SqlCommand comm = new SqlCommand(query, con);
+                SqlDataReader sdr = comm.ExecuteReader();
+
+                if (sdr.HasRows)
                 {
-                    User User = new User();
-                    User.Id = (int)sdr[nameof(User.Id)];
-                    User.Lastname = (string)sdr["Lastname"];
-                    User.Name = (string)sdr["Name"];
-                    if (! DBNull.Value.Equals(sdr["Mail"]))
+                    while (sdr.Read())
+                    {
+                        User User = new User();
+                        User.Id = (int)sdr[nameof(User.Id)];
+                        User.Lastname = (string)sdr["Lastname"];
+                        User.Name = (string)sdr["Name"];
+                        if (!DBNull.Value.Equals(sdr["Mail"]))
                         {
                             User.Mail = (string)sdr["Mail"];
                         }
-                    users.Add(User);
+                        User.IsDeleted = (bool)sdr["IsDeleted"];
+                        users.Add(User);
+                    }
+
                 }
 
+                
             }
-
-            con.Close();
-            con.Dispose();
-
             return users;
         }
 
@@ -81,21 +79,19 @@ namespace BorrowingManagerLibrary.DataLayer
         {
             int id = 0;
 
-            SqlConnection con = new SqlConnection();
-            con.ConnectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Documents\\Visual Studio 2015\\Projects\\BorrowingManager\\BorrowingManager\\borrowingManagerDB.mdf\"; Integrated Security = True";
-            con.Open();
-            string query = "INSERT INTO dbo.[User] (Mail,Name,Lastname) VALUES (@Mail,@Name,@Lastname);SELECT SCOPE_IDENTITY();";
-            SqlCommand comm = new SqlCommand(query, con);
-           
-            comm.Parameters.Add(new SqlParameter("@Mail", t.Mail));
-            comm.Parameters.Add(new SqlParameter("@Name", t.Name));
-            comm.Parameters.Add(new SqlParameter("@Lastname", t.Lastname));
+            using (SqlConnection con = GetConnection())
+            {
+                string query = "INSERT INTO dbo.[User] (Mail,Name,Lastname) VALUES (@Mail,@Name,@Lastname);SELECT SCOPE_IDENTITY();";
+                SqlCommand comm = new SqlCommand(query, con);
 
-            id = Convert.ToInt32(comm.ExecuteScalar());
+                comm.Parameters.Add(new SqlParameter("@Mail", t.Mail));
+                comm.Parameters.Add(new SqlParameter("@Name", t.Name));
+                comm.Parameters.Add(new SqlParameter("@Lastname", t.Lastname));
 
-            con.Close();
-            con.Dispose();
+                id = Convert.ToInt32(comm.ExecuteScalar());
 
+                
+            }
             return id;
         }
 
@@ -103,23 +99,18 @@ namespace BorrowingManagerLibrary.DataLayer
         {
             int result;
 
-            SqlConnection con = new SqlConnection();
-            con.ConnectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Documents\\Visual Studio 2015\\Projects\\BorrowingManager\\BorrowingManager\\borrowingManagerDB.mdf\"; Integrated Security = True";
-            con.Open();
-            string query = "UPDATE dbo.[User] SET Mail=@Mail,Name=@Name,Lastname=@Lastname WHERE Id = @id;";
-            SqlCommand comm = new SqlCommand(query, con);
+            using (SqlConnection con = GetConnection())
+            {
+                string query = "UPDATE dbo.[User] SET Mail=@Mail,Name=@Name,Lastname=@Lastname WHERE Id = @id;";
+                SqlCommand comm = new SqlCommand(query, con);
 
-            comm.Parameters.Add(new SqlParameter("@id", u.Id));
-            comm.Parameters.Add(new SqlParameter("@Mail", u.Mail));
-            comm.Parameters.Add(new SqlParameter("@Name", u.Name));
-            comm.Parameters.Add(new SqlParameter("@Lastname", u.Lastname));
+                comm.Parameters.Add(new SqlParameter("@id", u.Id));
+                comm.Parameters.Add(new SqlParameter("@Mail", u.Mail));
+                comm.Parameters.Add(new SqlParameter("@Name", u.Name));
+                comm.Parameters.Add(new SqlParameter("@Lastname", u.Lastname));
 
-            result = comm.ExecuteNonQuery();
-
-
-
-            con.Close();
-            con.Dispose();
+                result = comm.ExecuteNonQuery();
+                }
 
             return result;
         }
@@ -128,18 +119,16 @@ namespace BorrowingManagerLibrary.DataLayer
         {
             int result;
 
-            SqlConnection con = new SqlConnection();
-            con.ConnectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Documents\\Visual Studio 2015\\Projects\\BorrowingManager\\BorrowingManager\\borrowingManagerDB.mdf\"; Integrated Security = True";
-            con.Open();
-            string query = "UPDATE dbo.[User] SET IsDeleted=1 WHERE Id = @id;";
-            SqlCommand comm = new SqlCommand(query, con);
+            using (SqlConnection con = GetConnection())
+            {
+                string query = "UPDATE dbo.[User] SET IsDeleted=1 WHERE Id = @id;";
+                SqlCommand comm = new SqlCommand(query, con);
 
-            comm.Parameters.Add(new SqlParameter("@id", id));
+                comm.Parameters.Add(new SqlParameter("@id", id));
 
-            result = comm.ExecuteNonQuery();
+                result = comm.ExecuteNonQuery();
 
-            con.Close();
-            con.Dispose();
+            }
 
             return result;
         }
