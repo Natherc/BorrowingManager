@@ -1,0 +1,4 @@
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManagerLibrary\bin\Release\BorrowingManagerLibrary.dll
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManagerLibrary\bin\Release\BorrowingManagerLibrary.pdb
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManagerLibrary\obj\Release\BorrowingManagerLibrary.dll
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManagerLibrary\obj\Release\BorrowingManagerLibrary.pdb

@@ -1,4 +1,5 @@
 ﻿using BorrowingManagerLibrary.BusinessLogic;
+using BorrowingManagerLibrary.DataLayer;
 using BorrowingManagerLibrary.Models;
 using System;
 using System.Collections;
@@ -36,8 +37,7 @@ namespace BorrowingManager
             List<User> listUser = _userBLL.GetAll();
 
             dataTerritory.ItemsSource = listTerritory;          
-            dataUser.ItemsSource = listUser;
-               
+            dataUser.ItemsSource = listUser;       
         }
 
        

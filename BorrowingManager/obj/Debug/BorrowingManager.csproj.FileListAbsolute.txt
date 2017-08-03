@@ -1,6 +1,4 @@
 d:\documents\visual studio 2015\Projects\BorrowingManager\BorrowingManager\bin\Debug\BorrowingManager.exe.config
-D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\bin\Debug\borrowingManagerDB.mdf
-D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\bin\Debug\borrowingManagerDB_log.ldf
 D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\bin\Debug\BorrowingManager.exe
 D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\bin\Debug\BorrowingManager.pdb
 D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\BorrowingManager.csprojResolveAssemblyReference.cache
@@ -21,3 +19,5 @@ D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\D
 D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\TerritoryWindow.baml
 D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\UserWindow.g.cs
 D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\UserWindow.baml
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\bin\Debug\borrowingManagerDB.mdf
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\bin\Debug\borrowingManagerDB_log.ldf

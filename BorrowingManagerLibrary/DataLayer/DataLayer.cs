@@ -31,7 +31,10 @@ namespace BorrowingManagerLibrary.DataLayer
             }
             if(_con.State == System.Data.ConnectionState.Broken || 
                 _con.State == System.Data.ConnectionState.Closed)
+            {
                 _con.Open();
+            }
+                
 
             return _con;
         }
