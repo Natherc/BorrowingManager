@@ -1,6 +1,7 @@
 ﻿using BorrowingManagerLibrary.BusinessLogic;
 using BorrowingManagerLibrary.DataLayer;
 using BorrowingManagerLibrary.Models;
+using BorrowingManagerLibrary.ViewModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -34,13 +35,22 @@ namespace BorrowingManager
             InitializeComponent();
 
             List<Territory> listTerritory = _territoryBLL.GetAll();
-            List<User> listUser = _userBLL.GetAll();
+            List<User> listUser = _userBLL.GetAll();          
 
-            dataTerritory.ItemsSource = listTerritory;          
-            dataUser.ItemsSource = listUser;       
+            dataTerritory.ItemsSource = listTerritory;
+            FillAndHideUserGrid();
+                  
         }
 
-       
+       private void FillAndHideUserGrid()
+        {
+            dataUser.ItemsSource = null;
+            dataUser.Items.Clear();
+            List<User> listUser = _userBLL.GetAll();
+            dataUser.ItemsSource = listUser;
+
+            
+        }
 
        
 
@@ -70,11 +80,9 @@ namespace BorrowingManager
 
         private void UpdateUserGrid()
         {
-            dataUser.ItemsSource = null;
-            dataUser.Items.Clear();
-            List<User> listUser = _userBLL.GetAll();
-            dataUser.ItemsSource = listUser;
-            dataUser.Items.Refresh();
+            
+            
+            FillAndHideUserGrid();
 
         }
 

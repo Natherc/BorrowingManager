@@ -27,9 +27,10 @@ namespace BorrowingManagerLibrary.DataLayer
             if(_con == null)
             {
                 _con = new SqlConnection();
-                _con.ConnectionString = ConnectionString;
+                
             }
-            if(_con.State == System.Data.ConnectionState.Broken || 
+            _con.ConnectionString = ConnectionString;
+            if (_con.State == System.Data.ConnectionState.Broken || 
                 _con.State == System.Data.ConnectionState.Closed)
             {
                 _con.Open();
@@ -37,6 +38,30 @@ namespace BorrowingManagerLibrary.DataLayer
                 
 
             return _con;
+        }
+
+        public SqlDataReader GetSqlDataReader(string query, SqlConnection con, params SqlParameter[] parameters)
+        {
+            SqlCommand comm = GetSqlCommand(query, con,parameters);
+            
+            SqlDataReader sdr = comm.ExecuteReader();
+
+            return sdr;
+        }
+
+        public SqlCommand GetSqlCommand(string query, SqlConnection con, params SqlParameter[] parameters)
+        {
+            SqlCommand comm = new SqlCommand(query, con);
+            if (parameters != null && parameters.Length > 0)
+            {
+                foreach (SqlParameter param in parameters)
+                {
+                    comm.Parameters.Add(param);
+                }
+            }
+
+            
+            return comm;
         }
     }
 }

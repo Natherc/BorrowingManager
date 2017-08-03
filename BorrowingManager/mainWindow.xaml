@@ -21,7 +21,13 @@
             </DataGrid.ContextMenu>
         </DataGrid>
         <Label x:Name="connectLabel" Content="" HorizontalAlignment="Left" Margin="10,447,0,0" VerticalAlignment="Top" Width="858" FontFamily="Sitka Small" Height="30"/>
-        <DataGrid x:Name="dataUser" Margin="367,41,253.2,9.6" RenderTransformOrigin="0.5,0.5" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+        <DataGrid x:Name="dataUser" Margin="367,41,253.2,9.6" RenderTransformOrigin="0.5,0.5" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Width="*" Binding="{Binding Path=Id}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Nom" Width="*" Binding="{Binding Path=Lastname}"/>
+                <DataGridTextColumn Header="Prénom" Width="*" Binding="{Binding Path=Name}"/>
+                <DataGridTextColumn Header="Email" Width="*" Binding="{Binding Path=Mail}"/>
+            </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Supprimer" Click="DeleteItemUser_Click" />

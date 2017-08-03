@@ -1,5 +1,6 @@
 ﻿using BorrowingManagerLibrary.DataLayer;
 using BorrowingManagerLibrary.Models;
+using BorrowingManagerLibrary.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,6 +62,24 @@ namespace BorrowingManagerLibrary.BusinessLogic
                 
             result.Tag = t;
             return result;
+        }
+
+        public List<UserViewModel> ConvertToViewModel(List<User> listUser)
+        {
+            List<UserViewModel> listUserViewModel = new List<UserViewModel>();
+            if (listUser != null)
+            {
+                foreach(User u in listUser)
+                {
+                    UserViewModel v = new UserViewModel();
+                    v.Lastname = u.Lastname;
+                    v.Mail = u.Mail;
+                    v.Name = u.Name;
+
+                    listUserViewModel.Add(v);
+                }
+            }
+            return listUserViewModel;
         }
 
         public ResultViewModel Update(User t)

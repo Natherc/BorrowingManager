@@ -138,10 +138,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="borrowingManagerDB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="borrowingManagerDB_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <DependentUpon>borrowingManagerDB.mdf</DependentUpon>
     </Content>
   </ItemGroup>

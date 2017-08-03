@@ -18,9 +18,8 @@ namespace BorrowingManagerLibrary.DataLayer
             using (SqlConnection con = GetConnection())
             {
                 string query = "SELECT * FROM dbo.[User] WHERE id = @Id";
-                SqlCommand comm = new SqlCommand(query, con);
-                comm.Parameters.Add(new SqlParameter("@Id", id));
-                SqlDataReader sdr = comm.ExecuteReader();
+                SqlParameter param = new SqlParameter("@Id", id);
+                SqlDataReader sdr = GetSqlDataReader(query, con, param);
 
                 if (sdr.HasRows)
                 {
@@ -49,8 +48,7 @@ namespace BorrowingManagerLibrary.DataLayer
             using (SqlConnection con = GetConnection())
             {
                 string query = "SELECT * FROM dbo.[User] WHERE IsDeleted = 0;";
-                SqlCommand comm = new SqlCommand(query, con);
-                SqlDataReader sdr = comm.ExecuteReader();
+                SqlDataReader sdr = GetSqlDataReader(query, con);
 
                 if (sdr.HasRows)
                 {
@@ -82,11 +80,11 @@ namespace BorrowingManagerLibrary.DataLayer
             using (SqlConnection con = GetConnection())
             {
                 string query = "INSERT INTO dbo.[User] (Mail,Name,Lastname) VALUES (@Mail,@Name,@Lastname);SELECT SCOPE_IDENTITY();";
-                SqlCommand comm = new SqlCommand(query, con);
-
-                comm.Parameters.Add(new SqlParameter("@Mail", t.Mail));
-                comm.Parameters.Add(new SqlParameter("@Name", t.Name));
-                comm.Parameters.Add(new SqlParameter("@Lastname", t.Lastname));
+                List<SqlParameter> listParameters = new List<SqlParameter>();
+                listParameters.Add(new SqlParameter("@Mail", t.Mail));
+                listParameters.Add(new SqlParameter("@Name", t.Name));
+                listParameters.Add(new SqlParameter("@Lastname", t.Lastname));
+                SqlCommand comm = GetSqlCommand(query, con,listParameters.ToArray());
 
                 id = Convert.ToInt32(comm.ExecuteScalar());
 
