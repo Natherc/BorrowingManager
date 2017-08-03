@@ -52,35 +52,42 @@ namespace BorrowingManager
         private void button_Click(object sender, RoutedEventArgs e)
         {
             TerritoryBusinessLogic bll = new TerritoryBusinessLogic();
-
-            Territory.Number = txtNumber.Text;
-            Territory.Locality = txtLocality.Text;
+            
 
             ResultViewModel result = new ResultViewModel(); ;
 
             if (IsUpdate)
             {
-                
+                FillTerritoryProperties();
                 result = bll.Update(Territory);
+                
             }
             else
             {
-               result  = bll.Insert(Territory);
+                Territory = new Territory();
+                FillTerritoryProperties();
+                result = bll.Insert(Territory);
             }
-           
-                
-                
 
-                if (result.Succes)
-                {
-                    HasClosedAfterHitButtonSave = true;
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show(result.ErrorMessage);
-                }
 
+
+
+            if (result.Succes)
+            {
+                HasClosedAfterHitButtonSave = true;
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show(result.ErrorMessage);
+            }
+
+        }
+
+        private void FillTerritoryProperties()
+        {
+            Territory.Number = txtNumber.Text;
+            Territory.Locality = txtLocality.Text;
         }
 
         public void Dispose()

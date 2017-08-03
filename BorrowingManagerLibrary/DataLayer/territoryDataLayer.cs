@@ -50,7 +50,7 @@ namespace BorrowingManagerLibrary.DataLayer
             SqlConnection con = new SqlConnection();
             con.ConnectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Documents\\Visual Studio 2015\\Projects\\BorrowingManager\\BorrowingManager\\borrowingManagerDB.mdf\"; Integrated Security = True";
             con.Open();
-            string query = "SELECT * FROM dbo.Territory ORDER BY CreationDate asc";
+            string query = "SELECT * FROM dbo.Territory WHERE IsDeleted = 0 ORDER BY CreationDate asc";
             SqlCommand comm = new SqlCommand(query, con);
             SqlDataReader sdr = comm.ExecuteReader();
 
@@ -82,17 +82,29 @@ namespace BorrowingManagerLibrary.DataLayer
         public int Insert(Territory t)
         {
             int id = 0;
+            SqlCommand comm;
 
             SqlConnection con = new SqlConnection();
             con.ConnectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Documents\\Visual Studio 2015\\Projects\\BorrowingManager\\BorrowingManager\\borrowingManagerDB.mdf\"; Integrated Security = True";
             con.Open();
-            string query = "INSERT INTO dbo.Territory (Number,Locality,CreationDate,PathImage) VALUES (@number,@locality,@CreationDate,@PathImage);SELECT SCOPE_IDENTITY();";
-            SqlCommand comm = new SqlCommand(query, con);
-         
-            comm.Parameters.Add(new SqlParameter("@number", t.Number));
-            comm.Parameters.Add(new SqlParameter("@locality", t.Locality));
-            comm.Parameters.Add(new SqlParameter("@CreationDate", t.CreationDate));
-            comm.Parameters.Add(new SqlParameter("@PathImage", t.PathImage));
+            if (String.IsNullOrEmpty(t.PathImage))
+            {
+                string query = "INSERT INTO dbo.Territory (Number,Locality) VALUES (@number,@locality);SELECT SCOPE_IDENTITY();";
+                comm = new SqlCommand(query, con);
+
+                comm.Parameters.Add(new SqlParameter("@number", t.Number));
+                comm.Parameters.Add(new SqlParameter("@locality", t.Locality));
+            }
+            else
+            {
+                string query = "INSERT INTO dbo.Territory (Number,Locality,PathImage) VALUES (@number,@locality,@PathImage);SELECT SCOPE_IDENTITY();";
+                comm = new SqlCommand(query, con);
+
+                comm.Parameters.Add(new SqlParameter("@number", t.Number));
+                comm.Parameters.Add(new SqlParameter("@locality", t.Locality));
+                comm.Parameters.Add(new SqlParameter("@PathImage", t.PathImage));
+            }
+            
 
             id = Convert.ToInt32(comm.ExecuteScalar());
 
@@ -105,22 +117,33 @@ namespace BorrowingManagerLibrary.DataLayer
         public int Update(Territory t)
         {
             int result;
+            SqlCommand comm;
 
             SqlConnection con = new SqlConnection();
             con.ConnectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Documents\\Visual Studio 2015\\Projects\\BorrowingManager\\BorrowingManager\\borrowingManagerDB.mdf\"; Integrated Security = True";
             con.Open();
-            string query = "UPDATE dbo.Territory SET Number=@number,Locality=@locality,CreationDate=@CreationDate,PathImage=@PathImage WHERE Id = @id;";
-            SqlCommand comm = new SqlCommand(query, con);
 
-            comm.Parameters.Add(new SqlParameter("@id", t.Id));
-            comm.Parameters.Add(new SqlParameter("@number", t.Number));
-            comm.Parameters.Add(new SqlParameter("@locality", t.Locality));
-            comm.Parameters.Add(new SqlParameter("@CreationDate", t.CreationDate));
-            comm.Parameters.Add(new SqlParameter("@PathImage", t.PathImage));
+            if (String.IsNullOrEmpty(t.PathImage))
+            {
+                string query = "UPDATE dbo.Territory SET Number=@number,Locality=@locality WHERE Id = @id;";
+                comm = new SqlCommand(query, con);
+
+                comm.Parameters.Add(new SqlParameter("@Id", t.Id));
+                comm.Parameters.Add(new SqlParameter("@number", t.Number));
+                comm.Parameters.Add(new SqlParameter("@locality", t.Locality));
+            }
+            else
+            {
+                string query = "UPDATE dbo.Territory SET Number = @number,Locality = @locality,PathImage = @PathImage WHERE Id = @id; ";
+                comm = new SqlCommand(query, con);
+
+                comm.Parameters.Add(new SqlParameter("@Id", t.Id));
+                comm.Parameters.Add(new SqlParameter("@number", t.Number));
+                comm.Parameters.Add(new SqlParameter("@locality", t.Locality));
+                comm.Parameters.Add(new SqlParameter("@PathImage", t.PathImage));
+            }
 
             result = comm.ExecuteNonQuery();
-
-           
 
             con.Close();
             con.Dispose();
@@ -135,7 +158,7 @@ namespace BorrowingManagerLibrary.DataLayer
             SqlConnection con = new SqlConnection();
             con.ConnectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Documents\\Visual Studio 2015\\Projects\\BorrowingManager\\BorrowingManager\\borrowingManagerDB.mdf\"; Integrated Security = True";
             con.Open();
-            string query = "DELETE FROM dbo.Territory WHERE Id = @id;";
+            string query = "UPDATE dbo.Territory SET IsDeleted=1 WHERE Id = @id;";
             SqlCommand comm = new SqlCommand(query, con);
 
             comm.Parameters.Add(new SqlParameter("@id", id));

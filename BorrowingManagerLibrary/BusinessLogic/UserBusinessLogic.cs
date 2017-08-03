@@ -32,10 +32,16 @@ namespace BorrowingManagerLibrary.BusinessLogic
                 {
                     if (!string.IsNullOrEmpty(t.Name))
                     {
-                        
-                            t.Id = _userDL.Insert(t);
-                        result.Succes = true;
-                        
+                        if (IsValidMail(t.Mail))
+                        {
+                            t.Id =_userDL.Insert(t);
+                            result.Succes = true;
+                        }
+                        else
+                        {
+                            result.ErrorMessage = "Invalid mail";
+                        }
+
                     }
                     else
                     {
@@ -57,38 +63,66 @@ namespace BorrowingManagerLibrary.BusinessLogic
             return result;
         }
 
-        public void Update(User t)
+        public ResultViewModel Update(User t)
         {
+            ResultViewModel result = new ResultViewModel();
+
             if (t != null)
             {
-                if (!string.IsNullOrEmpty(t.Lastname) && t.Lastname.Length < 3)
+                if (!string.IsNullOrEmpty(t.Lastname))
                 {
                     if (!string.IsNullOrEmpty(t.Name))
                     {
-                        
+                        if (IsValidMail(t.Mail))
+                        {
                             _userDL.Update(t);
+                            result.Succes = true;
+                        }else
+                        {
+                            result.ErrorMessage = "Invalid mail";
+                        }
                         
+                        
+
                     }
                     else
                     {
-                        throw new Exception("Name cannot be empty");
+                        result.ErrorMessage = "Name cannot be empty";
+
                     }
                 }
                 else
                 {
-                    throw new Exception("Lastname cannot be empty");
+                    result.ErrorMessage = "Lastname cannot be empty";
                 }
             }
             else
             {
-                throw new Exception("Cannot insert null object");
+                result.ErrorMessage = "Cannot insert null object";
             }
+
+            result.Tag = t;
+            return result;
 
         }
 
         public void Delete(int id)
         {
             _userDL.Delete(id);
+        }
+
+        public bool IsValidMail(string mail)
+        {
+            try
+            {
+                System.Net.Mail.MailAddress address = new System.Net.Mail.MailAddress(mail);
+                return true;
+            }
+            catch
+            {
+
+            }
+            return false;
         }
     }
 }

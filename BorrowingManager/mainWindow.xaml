@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="BorrowManager" Height="500" Width="900">
     <Grid x:Name="windowGrid" Margin="0,0,-6.6,-0.2">
-        <DataGrid x:Name="dataTerritory" Margin="0,41,445.2,9.6" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Height="420">
+        <DataGrid x:Name="dataTerritory" Margin="10,41,538.2,9.6" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Height="420">
             <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Supprimer" Click="DeleteItem_Click" />
@@ -21,13 +21,19 @@
             </DataGrid.ContextMenu>
         </DataGrid>
         <Label x:Name="connectLabel" Content="" HorizontalAlignment="Left" Margin="10,447,0,0" VerticalAlignment="Top" Width="858" FontFamily="Sitka Small" Height="30"/>
-        <DataGrid x:Name="dataUser" Margin="460,11,160.2,49.6" RenderTransformOrigin="0.5,0.5" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
-        <DataGrid x:Name="dataHistory" Margin="753,11,10.2,49.6" RenderTransformOrigin="0.5,0.5" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
-        <TextBox x:Name="txtFirstName" HorizontalAlignment="Left" Height="23" Margin="605,438,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="263"/>
-        <Button x:Name="addTerritoryButton" Content="+" HorizontalAlignment="Left" Margin="280,16,0,0" VerticalAlignment="Top" Width="20" RenderTransformOrigin="0.067,0.183" Height="20" Click="addTerritoryButton_Click"/>
-
-
-
-
+        <DataGrid x:Name="dataUser" Margin="367,41,253.2,9.6" RenderTransformOrigin="0.5,0.5" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Supprimer" Click="DeleteItemUser_Click" />
+                    <Separator />
+                    <MenuItem Header="Ajouter" Click="addUserButton_Click"/>
+                    <Separator/>
+                    <MenuItem Header="Modifier" Click="UpdateItemUser_Click"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        <DataGrid x:Name="dataHistory" Margin="652,41,10,9.6" RenderTransformOrigin="0.5,0.5" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
+        <Button x:Name="addTerritoryButton" Content="Ajouter Territoire" HorizontalAlignment="Left" Margin="262,11,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.067,0.183" Height="20" Click="addTerritoryButton_Click"/>
+        <Button x:Name="addUserButton" Content="Ajouter Utilisateur" HorizontalAlignment="Left" Margin="547,11,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.067,0.183" Height="20" Click="addUserButton_Click"/>
     </Grid>
 </Window>

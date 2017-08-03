@@ -40,27 +40,9 @@ namespace BorrowingManager
                
         }
 
-        private void InsertUser()
-        {
-            User u = new User();
-            u.Lastname = txtFirstName.Text;
-            ResultViewModel r = _userBLL.Insert(u);
-            if (!r.Succes)
-            {
-                MessageBox.Show(r.ErrorMessage);
-            }
-        }
+       
 
-        private void InsertTerritory()
-        {
-            Territory t = new Territory();
-            
-            ResultViewModel r = _territoryBLL.Insert(t);
-            if (!r.Succes)
-            {
-                MessageBox.Show(r.ErrorMessage);
-            }
-        }
+       
 
             private void addTerritoryButton_Click(object sender, RoutedEventArgs e)
     {
@@ -86,6 +68,16 @@ namespace BorrowingManager
 
         }
 
+        private void UpdateUserGrid()
+        {
+            dataUser.ItemsSource = null;
+            dataUser.Items.Clear();
+            List<User> listUser = _userBLL.GetAll();
+            dataUser.ItemsSource = listUser;
+            dataUser.Items.Refresh();
+
+        }
+
         private void DeleteItem_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = (MenuItem)sender;
@@ -100,7 +92,13 @@ namespace BorrowingManager
             //to the DataGrid (and has subject and state as property)
             var toDeleteFromBindedList = (Territory)item.SelectedCells[0].Item;
 
-            _territoryBLL.Delete(toDeleteFromBindedList.Id);
+            if (MessageBox.Show("Etes-vous sûre de vouloir supprimer ce territoire ?", "Attention", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
+            {
+
+                _territoryBLL.Delete(toDeleteFromBindedList.Id);
+
+                UpdateTerritoryGrid();
+            }
 
             UpdateTerritoryGrid();
 
@@ -125,12 +123,80 @@ namespace BorrowingManager
                 frm.Owner = this;
                 frm.Territory = territoryToUpdate;
                 frm.ShowDialog();
+
                 if (frm.HasClosedAfterHitButtonSave)
                 {
                     UpdateTerritoryGrid();
 
                 }
                 
+            }
+        }
+
+        private void addUserButton_Click(object sender, RoutedEventArgs e)
+        {
+            using (UserWindow frm = new UserWindow())
+            {
+                frm.Owner = this;
+                frm.ShowDialog();
+                if (frm.HasClosedAfterHitButtonSave)
+                {
+                    UpdateUserGrid();
+
+                }
+            }
+        }
+
+        private void DeleteItemUser_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+
+            //Get the ContextMenu to which the menuItem belongs
+            var contextMenu = (ContextMenu)menuItem.Parent;
+
+            //Find the placementTarget
+            var item = (DataGrid)contextMenu.PlacementTarget;
+
+            //Get the underlying item, that you cast to your object that is bound
+            //to the DataGrid (and has subject and state as property)
+            var toDeleteFromBindedList = (User)item.SelectedCells[0].Item;
+
+            if (MessageBox.Show("Etes-vous sûre de vouloir supprimer cet utilisateur ?","Attention",MessageBoxButton.YesNo,MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
+            {
+                
+                _userBLL.Delete(toDeleteFromBindedList.Id);
+
+                UpdateUserGrid();
+            }
+            
+        }
+
+        private void UpdateItemUser_Click(object sender, RoutedEventArgs e)
+        {
+            using (UserWindow frm = new UserWindow())
+            {
+                var menuItem = (MenuItem)sender;
+
+                //Get the ContextMenu to which the menuItem belongs
+                var contextMenu = (ContextMenu)menuItem.Parent;
+
+                //Find the placementTarget
+                var item = (DataGrid)contextMenu.PlacementTarget;
+
+                //Get the underlying item, that you cast to your object that is bound
+                //to the DataGrid (and has subject and state as property)
+                var userToUpdate = (User)item.SelectedCells[0].Item;
+
+                frm.Owner = this;
+                frm.User = userToUpdate;
+                frm.ShowDialog();
+
+                if (frm.HasClosedAfterHitButtonSave)
+                {
+                    UpdateUserGrid();
+
+                }
+
             }
         }
     }
