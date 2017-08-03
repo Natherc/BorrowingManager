@@ -44,8 +44,9 @@
     <Compile Include="BusinessLogic\UserBusinessLogic.cs" />
     <Compile Include="DataLayer\TerritoryDataLayer.cs" />
     <Compile Include="DataLayer\UserDataLayer.cs" />
-    <Compile Include="Model\Territory.cs" />
-    <Compile Include="Model\User.cs" />
+    <Compile Include="Models\ResultViewModel.cs" />
+    <Compile Include="Models\Territory.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

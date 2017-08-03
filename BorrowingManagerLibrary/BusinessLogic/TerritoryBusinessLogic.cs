@@ -22,34 +22,34 @@ namespace BorrowingManagerLibrary.BusinessLogic
             return _territoryDL.GetAll();
         }
 
-        public Territory Insert(Territory t)
+        public ResultViewModel Insert(Territory t)
         {
+            ResultViewModel r = new ResultViewModel();
+
             if(t != null)
             {
                 if (!string.IsNullOrEmpty(t.Number))
                 {
                     if (!string.IsNullOrEmpty(t.Locality))
                     {
-                        if(t.LastBorrowing != DateTime.MinValue)
-                        {
+                        t.CreationDate = DateTime.Now;
                             t.Id = _territoryDL.Insert(t);
-                        }else
-                        {
-                            throw new Exception("LastBorrowing cannot be empty");
-                        }
+                            r.Succes = true;
+                        
                     }else
                     {
-                        throw new Exception("Locality cannot be empty");
+                        r.ErrorMessage = "Locality cannot be empty";
                     }
                 }else
                 {
-                    throw new Exception("Number cannot be empty");
+                    r.ErrorMessage = "Number cannot be empty";
                 }
             }else
             {
-                throw new Exception("Cannot insert null object");
+                r.ErrorMessage = "Cannot insert null object";
             }
-            return t;
+            r.Tag = t;
+            return r;
         }
 
         public void Update(Territory t)
@@ -60,13 +60,13 @@ namespace BorrowingManagerLibrary.BusinessLogic
                 {
                     if (!string.IsNullOrEmpty(t.Locality))
                     {
-                        if (t.LastBorrowing != DateTime.MinValue)
+                        if (t.CreationDate != DateTime.MinValue)
                         {
                              _territoryDL.Update(t);
                         }
                         else
                         {
-                            throw new Exception("LastBorrowing cannot be empty");
+                            throw new Exception("CreationDate cannot be empty");
                         }
                     }
                     else

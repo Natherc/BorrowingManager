@@ -1,5 +1,5 @@
 ﻿using BorrowingManagerLibrary.DataLayer;
-using BorrowingManagerLibrary.Model;
+using BorrowingManagerLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,8 +22,10 @@ namespace BorrowingManagerLibrary.BusinessLogic
             return _userDL.GetAll();
         }
 
-        public User Insert(User t)
+        public ResultViewModel Insert(User t)
         {
+            ResultViewModel result = new ResultViewModel();
+
             if (t != null)
             {
                 if (!string.IsNullOrEmpty(t.Lastname))
@@ -32,23 +34,27 @@ namespace BorrowingManagerLibrary.BusinessLogic
                     {
                         
                             t.Id = _userDL.Insert(t);
+                        result.Succes = true;
                         
                     }
                     else
                     {
-                        throw new Exception("Name cannot be empty");
+                        result.ErrorMessage ="Name cannot be empty";
+                       
                     }
                 }
                 else
                 {
-                    throw new Exception("Lastname cannot be empty");
+                    result.ErrorMessage = "Lastname cannot be empty";
                 }
             }
             else
             {
-                throw new Exception("Cannot insert null object");
+                result.ErrorMessage = "Cannot insert null object";
             }
-            return t;
+                
+            result.Tag = t;
+            return result;
         }
 
         public void Update(User t)

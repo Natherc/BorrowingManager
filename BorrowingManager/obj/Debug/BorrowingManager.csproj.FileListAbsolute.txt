@@ -17,3 +17,5 @@ D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\D
 D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\mainwindow.baml
 D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\bin\Debug\BorrowingManagerLibrary.dll
 D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\bin\Debug\BorrowingManagerLibrary.pdb
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\TerritoryWindow.g.cs
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\TerritoryWindow.baml

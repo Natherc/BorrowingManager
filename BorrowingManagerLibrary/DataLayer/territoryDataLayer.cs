@@ -28,7 +28,7 @@ namespace BorrowingManagerLibrary.DataLayer
                 territory = new Territory();
                 sdr.Read();
                 territory.Id = (int)sdr["Id"];
-                territory.LastBorrowing = (DateTime)sdr["LastBorrowing"];
+                territory.CreationDate = (DateTime)sdr["CreationDate"];
                 territory.Locality = (String)sdr["Locality"];
                 territory.Number = (String)sdr["Number"];
             }
@@ -46,7 +46,7 @@ namespace BorrowingManagerLibrary.DataLayer
             SqlConnection con = new SqlConnection();
             con.ConnectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Documents\\Visual Studio 2015\\Projects\\BorrowingManager\\BorrowingManager\\borrowingManagerDB.mdf\"; Integrated Security = True";
             con.Open();
-            string query = "SELECT * FROM dbo.Territory ORDER BY LastBorrowing asc";
+            string query = "SELECT * FROM dbo.Territory ORDER BY CreationDate asc";
             SqlCommand comm = new SqlCommand(query, con);
             SqlDataReader sdr = comm.ExecuteReader();
 
@@ -56,7 +56,7 @@ namespace BorrowingManagerLibrary.DataLayer
                 {
                     Territory territory = new Territory();
                     territory.Id = (int)sdr[nameof(territory.Id)];
-                    territory.LastBorrowing = (DateTime)sdr["LastBorrowing"];
+                    territory.CreationDate = (DateTime)sdr["CreationDate"];
                     territory.Locality = (String)sdr["Locality"];
                     territory.Number = (String)sdr["Number"];
                     territories.Add(territory);
@@ -77,20 +77,18 @@ namespace BorrowingManagerLibrary.DataLayer
             SqlConnection con = new SqlConnection();
             con.ConnectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Documents\\Visual Studio 2015\\Projects\\BorrowingManager\\BorrowingManager\\borrowingManagerDB.mdf\"; Integrated Security = True";
             con.Open();
-            string query = "INSERT INTO dbo.Territory (Number,Locality,LastBorrowing) VALUES (@number,@locality,@LastBorrowing);SELECT @@IDENTITY;";
+            string query = "INSERT INTO dbo.Territory (Number,Locality,CreationDate) VALUES (@number,@locality,@CreationDate);SELECT SCOPE_IDENTITY();";
             SqlCommand comm = new SqlCommand(query, con);
-            SqlParameter outputIdParam = new SqlParameter("@Id", SqlDbType.Int)
-            {
-                Direction = ParameterDirection.Output
-            };
-            comm.Parameters.Add(outputIdParam);
+            //SqlParameter outputIdParam = new SqlParameter("@Id", SqlDbType.Int)
+            //{
+            //    Direction = ParameterDirection.Output
+            //};
+            //comm.Parameters.Add(outputIdParam);
             comm.Parameters.Add(new SqlParameter("@number", t.Number));
             comm.Parameters.Add(new SqlParameter("@locality", t.Locality));
-            comm.Parameters.Add(new SqlParameter("@LastBorrowing", t.LastBorrowing));
+            comm.Parameters.Add(new SqlParameter("@CreationDate", t.CreationDate));
 
-            comm.ExecuteNonQuery();
-
-            id = (int)outputIdParam.Value;
+            id = Convert.ToInt32(comm.ExecuteScalar());
 
             con.Close();
             con.Dispose();
@@ -105,13 +103,13 @@ namespace BorrowingManagerLibrary.DataLayer
             SqlConnection con = new SqlConnection();
             con.ConnectionString = "Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"D:\\Documents\\Visual Studio 2015\\Projects\\BorrowingManager\\BorrowingManager\\borrowingManagerDB.mdf\"; Integrated Security = True";
             con.Open();
-            string query = "UPLastBorrowing dbo.Territory SET Number=@number,Locality=@locality,LastBorrowing=@LastBorrowing WHERE Id = @id;";
+            string query = "UPDATE dbo.Territory SET Number=@number,Locality=@locality,CreationDate=@CreationDate WHERE Id = @id;";
             SqlCommand comm = new SqlCommand(query, con);
 
             comm.Parameters.Add(new SqlParameter("@id", t.Id));
             comm.Parameters.Add(new SqlParameter("@number", t.Number));
             comm.Parameters.Add(new SqlParameter("@locality", t.Locality));
-            comm.Parameters.Add(new SqlParameter("@LastBorrowing", t.LastBorrowing));
+            comm.Parameters.Add(new SqlParameter("@CreationDate", t.CreationDate));
 
             result = comm.ExecuteNonQuery();
 

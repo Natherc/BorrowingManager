@@ -1,5 +1,4 @@
 ﻿using BorrowingManagerLibrary.BusinessLogic;
-using BorrowingManagerLibrary.Model;
 using BorrowingManagerLibrary.Models;
 using System;
 using System.Collections;
@@ -35,49 +34,76 @@ namespace BorrowingManager
 
             List<Territory> listTerritory = _territoryBLL.GetAll();
             List<User> listUser = _userBLL.GetAll();
-            dataTerritory.ItemsSource = listTerritory;
-            
+
+            dataTerritory.ItemsSource = listTerritory;          
             dataUser.ItemsSource = listUser;
-            FitToContent(dataTerritory);
-            FitToContent(dataUser);
-
-         
-            
-
-            
-
-          
-            
+               
         }
 
-        private void FitToContent(DataGrid dg)
+        private void InsertUser()
         {
-            // where dg is my data grid's name...
-            foreach (DataGridColumn column in dg.Columns)
+            User u = new User();
+            u.Lastname = txtFirstName.Text;
+            ResultViewModel r = _userBLL.Insert(u);
+            if (!r.Succes)
             {
-                //if you want to size ur column as per the cell content
-                column.Width = new DataGridLength(1.0, DataGridLengthUnitType.SizeToCells);
-                //if you want to size ur column as per the column header
-                column.Width = new DataGridLength(1.0, DataGridLengthUnitType.SizeToHeader);
-                //if you want to size ur column as per both header and cell content
-                column.Width = new DataGridLength(1.0, DataGridLengthUnitType.Auto);
+                MessageBox.Show(r.ErrorMessage);
             }
         }
 
-
-
-
-
-
-        public IEnumerable<DataGridRow> GetDataGridRows(DataGrid grid)
+        private void InsertTerritory()
         {
-            var itemsSource = grid.ItemsSource as IEnumerable;
-            if (null == itemsSource) yield return null;
-            foreach (var item in itemsSource)
+            Territory t = new Territory();
+            
+            ResultViewModel r = _territoryBLL.Insert(t);
+            if (!r.Succes)
             {
-                var row = grid.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
-                if (null != row) yield return row;
+                MessageBox.Show(r.ErrorMessage);
             }
+        }
+
+            private void addTerritoryButton_Click(object sender, RoutedEventArgs e)
+    {
+            using (territoryWindow frm = new territoryWindow())
+            {
+                frm.Owner = this;
+                frm.ShowDialog();
+                if (frm.HasClosedAfterHitButtonSave)
+                {
+                    UpdateTerritoryGrid();
+                    
+                }
+            }
+        }
+
+        private void UpdateTerritoryGrid()
+        {
+            dataTerritory.ItemsSource = null;
+            dataTerritory.Items.Clear();
+            List<Territory> listTerritory = _territoryBLL.GetAll();
+            dataTerritory.ItemsSource = listTerritory;
+            dataTerritory.Items.Refresh();
+
+        }
+
+        private void DeleteItem_Click(object sender, RoutedEventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+
+            //Get the ContextMenu to which the menuItem belongs
+            var contextMenu = (ContextMenu)menuItem.Parent;
+
+            //Find the placementTarget
+            var item = (DataGrid)contextMenu.PlacementTarget;
+
+            //Get the underlying item, that you cast to your object that is bound
+            //to the DataGrid (and has subject and state as property)
+            var toDeleteFromBindedList = (Territory)item.SelectedCells[0].Item;
+
+            _territoryBLL.Delete(toDeleteFromBindedList.Id);
+
+            UpdateTerritoryGrid();
+
         }
     }
 }
