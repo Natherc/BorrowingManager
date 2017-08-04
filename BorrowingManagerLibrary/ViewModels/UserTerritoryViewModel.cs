@@ -17,7 +17,6 @@ namespace BorrowingManagerLibrary.ViewModels
         public string TerritoryName { get; set; }
         public string TerritoryNumber { get; set; }
         public string UserMail { get; set; }
-
         public string UserName { get; set; }
         public string UserLastname { get; set; }
 

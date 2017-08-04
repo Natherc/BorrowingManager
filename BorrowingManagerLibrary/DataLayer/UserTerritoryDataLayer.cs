@@ -60,7 +60,8 @@ namespace BorrowingManagerLibrary.DataLayer
                         userTerritory.Id = (int)sdr[nameof(userTerritory.Id)];
                         userTerritory.TerritoryId = (int)sdr["TerritoryId"];
                         userTerritory.UserId = (int)sdr["UserId"];
-                        userTerritory.EndBorrowing = (DateTime)sdr["EndBorrowing"];
+                        if(sdr["EndBorrowing"] != DBNull.Value)
+                            userTerritory.EndBorrowing = (DateTime)sdr["EndBorrowing"];
                         userTerritory.BeginBorrowing = (DateTime)sdr["BeginBorrowing"];
 
                         userTerritory.IsDeleted = (bool)sdr["IsDeleted"];

@@ -24,9 +24,10 @@ namespace BorrowingManager
     {
         public bool HasClosedAfterHitButtonSave { get; set; }
         public UserTerritory UserTerritory { get; set; }
-        public User selectedUser { get; set; }
+        public User SelectedUser { get; set; }
         public UserTerritoryViewModel UserTerritoryViewModel { get; set; }
         public UserTerritoryBusinessLogic _userTerritoryBll = new UserTerritoryBusinessLogic();
+        public TerritoryBusinessLogic _territoryBusinessLogic = new TerritoryBusinessLogic();
         public bool IsUpdate
         {
             get
@@ -41,6 +42,9 @@ namespace BorrowingManager
         {
             DateTime selectedDate;
             InitializeComponent();
+   
+            comboBorrowTerritory.ItemsSource = _territoryBusinessLogic.GetAll();
+            
             dateBorrowBegin.SelectedDate = DateTime.Now;
             selectedDate = (DateTime)dateBorrowBegin.SelectedDate;
             lblBorrowActualBegin.Content = selectedDate.ToString("dd/MM/yy");
@@ -48,11 +52,7 @@ namespace BorrowingManager
 
         private void BorrowWindow1_Loaded(object sender, RoutedEventArgs e)
         {
-            List<UserTerritory> userTerrList;
-            List<UserTerritoryViewModel> userTerrViewModelList;
-            userTerrList = _userTerritoryBll.GetAll();
-            userTerrViewModelList = _userTerritoryBll.ConvertToViewModel(userTerrList);
-            comboBorrowTerritory.ItemsSource = userTerrViewModelList;
+            
 
         }
 
@@ -72,7 +72,6 @@ namespace BorrowingManager
             else
             {
                 UserTerritory = new UserTerritory();
-
                 FillUserTerritoryProperties();
 
                 result = bll.Insert(UserTerritory);
@@ -92,11 +91,9 @@ namespace BorrowingManager
         }
 
         private void FillUserTerritoryProperties()
-        {
-            UserTerritoryViewModel selected = (UserTerritoryViewModel)comboBorrowTerritory.SelectedItem;
-            UserTerritory.TerritoryId = selected.TerritoryId;
-            UserTerritory.UserId = selected.UserId;
-            UserTerritory.IsDeleted = selected.IsDeleted;
+        {     
+            UserTerritory.TerritoryId = (int)comboBorrowTerritory.SelectedValue;
+            UserTerritory.UserId = SelectedUser.Id;
             UserTerritory.BeginBorrowing = dateBorrowBegin.SelectedDate;
             UserTerritory.EndBorrowing = dateBorrowEnd.SelectedDate;
         }
@@ -114,8 +111,17 @@ namespace BorrowingManager
 
         private void dateBorrowEnd_CalendarClosed(object sender, RoutedEventArgs e)
         {
-            DateTime selectDate = (DateTime)dateBorrowEnd.SelectedDate;
-            lblBorrowActualEnd.Content = selectDate.ToString("dd/MM/yy");
+            if (dateBorrowEnd.SelectedDate != null)
+            {
+                DateTime selectDate = (DateTime)dateBorrowEnd.SelectedDate;
+                lblBorrowActualEnd.Content = selectDate.ToString("dd/MM/yy");
+            }
+        }
+
+        private void btnBorrowReset_Click(object sender, RoutedEventArgs e)
+        {
+            dateBorrowEnd.SelectedDate = null;
+            lblBorrowActualEnd.Content = "";
         }
     }
 }

@@ -85,7 +85,7 @@ namespace BorrowingManager
             dataHistory.ItemsSource = null;
             dataHistory.Items.Clear();
             List<UserTerritory> listUserTerritory = _userTerritoryBLL.GetAll();
-            dataHistory.ItemsSource = listUserTerritory;
+            dataHistory.ItemsSource = _userTerritoryBLL.ConvertToViewModel(listUserTerritory);
             dataHistory.Items.Refresh();
 
         }
@@ -197,7 +197,7 @@ namespace BorrowingManager
         {
             using (BorrowWindow frm = new BorrowWindow())
             {
-                frm.selectedUser = GetSelectedElement<User>(dataUser);
+                frm.SelectedUser = GetSelectedElement<User>(dataUser);
                 frm.Owner = this;
                 frm.ShowDialog();
                 if (frm.HasClosedAfterHitButtonSave)

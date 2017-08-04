@@ -41,7 +41,7 @@ namespace BorrowingManagerLibrary.BusinessLogic
                     u.EndBorrowing = userTerritory.EndBorrowing;
                     u.IsDeleted = userTerritory.IsDeleted;
 
-                    Territory territory = territoryBLL.GetById(userTerritory.Id);
+                    Territory territory = territoryBLL.GetById(u.TerritoryId);
                     if(territory != null)
                     {
                         u.TerritoryName = territory.Locality;

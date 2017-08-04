@@ -56,11 +56,11 @@
         </DataGrid>
         <DataGrid x:Name="dataHistory" Margin="668,41,-11.8,9" RenderTransformOrigin="0.5,0.5" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="False" Grid.ColumnSpan="4" CanUserAddRows="false" VerticalAlignment="Top" Background="White" BorderBrush="#FF6CACEA">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="N°" Width="*" Binding="{Binding Path=Number}"/>
+                <DataGridTextColumn Header="N°" Width="*" Binding="{Binding Path=TerritoryNumber}"/>
                 <DataGridTextColumn Header="Id" Width="*" Binding="{Binding Path=Id}" Visibility="Hidden"/>
-                <DataGridTextColumn Header="Nom" Width="*" Binding="{Binding Path=Lastname}"/>
-                <DataGridTextColumn Header="Prénom" Width="*" Binding="{Binding Path=Name}"/>
-                <DataGridTextColumn Header="Début" Width="*" Binding="{Binding Path=BeginBorrowing}"/>
+                <DataGridTextColumn Header="Nom" Width="*" Binding="{Binding Path=UserLastname}"/>
+                <DataGridTextColumn Header="Prénom" Width="*" Binding="{Binding Path=UserName}"/>
+                <DataGridTextColumn Header="Début" Width="*" Binding="{Binding Path=BeginBorrowing,StringFormat={}{0:dd/MM/yyyy}}"/>
                 <DataGridTextColumn Header="Fin" Width="*" Binding="{Binding Path=EndBorrowing}"/>
             </DataGrid.Columns>
         </DataGrid>
