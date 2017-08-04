@@ -65,6 +65,18 @@ namespace BorrowingManagerLibrary.BusinessLogic
             return usersViewModel;
         }
 
+        public UserTerritory convertToUserTerritory(UserTerritoryViewModel userTerr)
+        {
+            UserTerritory user = new UserTerritory();
+            user.Id = userTerr.Id;
+            user.TerritoryId = userTerr.TerritoryId;
+            user.UserId = userTerr.UserId;
+            user.BeginBorrowing = userTerr.BeginBorrowing;
+            user.EndBorrowing = userTerr.EndBorrowing;
+
+            return user;
+        }
+
         public ResultViewModel Insert(UserTerritory t)
         {
             ResultViewModel r = new ResultViewModel();

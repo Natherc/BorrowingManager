@@ -30,7 +30,7 @@
                     <Separator/>
                     <MenuItem Header="Modifier" Click="UpdateTerritory_Click"/>
                     <Separator/>
-                    <MenuItem Header="Détails" />
+                    <MenuItem Header="Détails" Click="OpenDetails_Click"/>
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
@@ -50,7 +50,7 @@
                     <Separator/>
                     <MenuItem Header="Modifier" Click="UpdateItemUser_Click"/>
                     <Separator/>
-                    <MenuItem Header="Emprunter" Click="BorrowItem_Click"/>
+                    <MenuItem Header="Emprunter" Click="BorrowUserGrid_Click"/>
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
@@ -61,8 +61,15 @@
                 <DataGridTextColumn Header="Nom" Width="*" Binding="{Binding Path=UserLastname}"/>
                 <DataGridTextColumn Header="Prénom" Width="*" Binding="{Binding Path=UserName}"/>
                 <DataGridTextColumn Header="Début" Width="*" Binding="{Binding Path=BeginBorrowing,StringFormat={}{0:dd/MM/yyyy}}"/>
-                <DataGridTextColumn Header="Fin" Width="*" Binding="{Binding Path=EndBorrowing}"/>
+                <DataGridTextColumn Header="Fin" Width="*" Binding="{Binding Path=EndBorrowing,StringFormat={}{0:dd/MM/yyyy}}"/>
             </DataGrid.Columns>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Rendre" Click="BackTerritory_Click"/>
+                    <Separator/>
+                    <MenuItem Header="Modifier" Click="UpdateUserTerritory_Click"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
         </DataGrid>
         <Button x:Name="addTerritoryButton" Content="Ajouter Territoire" HorizontalAlignment="Left" Margin="183,11,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.067,0.183" Height="20" Click="addTerritoryButton_Click"/>
         <Button x:Name="addUserButton" Content="Ajouter Utilisateur" HorizontalAlignment="Left" Margin="557,11,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.067,0.183" Height="20" Click="addUserButton_Click"/>

@@ -105,28 +105,17 @@ namespace BorrowingManagerLibrary.DataLayer
 
             using (SqlConnection con = GetConnection())
             {
-                SqlCommand comm;
-                string query;
+                string query = "UPDATE dbo.UserTerritory SET TerritoryId = @TerritoryId,UserId = @UserId,EndBorrowing=@EndBorrowing WHERE Id = @Id; ";
+                List<SqlParameter> list = new List<SqlParameter>();
+                list.Add(new SqlParameter("@Id", t.Id));
+                list.Add(new SqlParameter("@TerritoryId", t.TerritoryId));
+                list.Add(new SqlParameter("@UserId", t.UserId));
+                if(t.EndBorrowing == null)
+                    list.Add(new SqlParameter("@EndBorrowing", DBNull.Value));
+                else
+                    list.Add(new SqlParameter("@EndBorrowing", (DateTime)t.EndBorrowing));
 
-                if(t.EndBorrowing != null || t.EndBorrowing != DateTime.MinValue)
-                {
-                    query = "UPDATE dbo.UserTerritory SET TerritoryId = @number,UserId = @userId,EndBorrowing=@endBorrowing WHERE Id = @id; ";
-                    comm = new SqlCommand(query, con);
-                    comm.Parameters.Add(new SqlParameter("@Id", t.Id));
-                    comm.Parameters.Add(new SqlParameter("@number", t.TerritoryId));
-                    comm.Parameters.Add(new SqlParameter("@userId", t.UserId));
-                    comm.Parameters.Add(new SqlParameter("@userId", t.EndBorrowing));
-                }else
-                {
-                    query = "UPDATE dbo.UserTerritory SET TerritoryId = @number,UserId = @userId WHERE Id = @id; ";
-                    comm = new SqlCommand(query, con);
-                    comm.Parameters.Add(new SqlParameter("@Id", t.Id));
-                    comm.Parameters.Add(new SqlParameter("@number", t.TerritoryId));
-                    comm.Parameters.Add(new SqlParameter("@userId", t.UserId));
-                }
-                
-                comm = new SqlCommand(query, con);
-               
+                SqlCommand comm = GetSqlCommand(query, con, list.ToArray());
                 result = comm.ExecuteNonQuery();
             }
             return result;

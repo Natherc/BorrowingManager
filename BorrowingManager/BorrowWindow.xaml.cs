@@ -25,6 +25,7 @@ namespace BorrowingManager
         public bool HasClosedAfterHitButtonSave { get; set; }
         public UserTerritory UserTerritory { get; set; }
         public User SelectedUser { get; set; }
+        public UserBusinessLogic _userBll = new UserBusinessLogic();
         public UserTerritoryViewModel UserTerritoryViewModel { get; set; }
         public UserTerritoryBusinessLogic _userTerritoryBll = new UserTerritoryBusinessLogic();
         public TerritoryBusinessLogic _territoryBusinessLogic = new TerritoryBusinessLogic();
@@ -32,7 +33,7 @@ namespace BorrowingManager
         {
             get
             {
-                if (UserTerritory != null)
+                if (UserTerritory != null || UserTerritoryViewModel != null)
                     return true;
 
                 return false;
@@ -48,11 +49,26 @@ namespace BorrowingManager
             dateBorrowBegin.SelectedDate = DateTime.Now;
             selectedDate = (DateTime)dateBorrowBegin.SelectedDate;
             lblBorrowActualBegin.Content = selectedDate.ToString("dd/MM/yy");
+
+
         }
 
         private void BorrowWindow1_Loaded(object sender, RoutedEventArgs e)
         {
-            
+            HasClosedAfterHitButtonSave = false;
+
+            if (UserTerritoryViewModel != null)
+            {
+                comboBorrowTerritory.SelectedValue = UserTerritoryViewModel.TerritoryId;
+                dateBorrowBegin.SelectedDate = UserTerritoryViewModel.BeginBorrowing;
+                dateBorrowEnd.SelectedDate = UserTerritoryViewModel.EndBorrowing;
+
+                DateTime beginDate = (DateTime)dateBorrowBegin.SelectedDate;
+                DateTime endDate = (DateTime)dateBorrowEnd.SelectedDate;
+
+                lblBorrowActualBegin.Content = beginDate.ToString("dd/MM/yy");
+                lblBorrowActualEnd.Content = beginDate.ToString("dd/MM/yy");
+            }
 
         }
 
@@ -60,10 +76,16 @@ namespace BorrowingManager
         {
             UserTerritoryBusinessLogic bll = new UserTerritoryBusinessLogic();
 
-            ResultViewModel result = new ResultViewModel(); ;
+            ResultViewModel result = new ResultViewModel();
+
+            if(UserTerritory == null && UserTerritoryViewModel != null)
+            {
+                UserTerritory = bll.convertToUserTerritory(UserTerritoryViewModel);
+            }
 
             if (IsUpdate)
             {
+                
                 FillUserTerritoryProperties();
 
                 result = bll.Update(UserTerritory);

@@ -10,11 +10,11 @@ none
 false
 TRACE
 D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\App.xaml
-3-1639055809
+5-1204701001
 22138204672
-111091949113
+13-77137055
 14-2099583649
-mainwindow.xaml;TerritoryWindow.xaml;UserWindow.xaml;
+BorrowWindow.xaml;DetailsWindow.xaml;mainwindow.xaml;TerritoryWindow.xaml;UserWindow.xaml;
 
 True
 

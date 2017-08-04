@@ -119,10 +119,6 @@ namespace BorrowingManager
               "Portable Network Graphic (*.png)|*.png";
             if(op.ShowDialog() == true)
             {
-                if (!IsUpdate)
-                {
-                    Territory = new Territory();
-                }
                 Territory.PathImage = op.FileName;
             }
            

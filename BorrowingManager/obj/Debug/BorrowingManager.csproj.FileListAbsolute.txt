@@ -23,3 +23,5 @@ D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\bin\D
 D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\bin\Debug\borrowingManagerDB_log.ldf
 D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\BorrowWindow.g.cs
 D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\BorrowWindow.baml
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\DetailsWindow.g.cs
+D:\Documents\Visual Studio 2015\Projects\BorrowingManager\BorrowingManager\obj\Debug\DetailsWindow.baml

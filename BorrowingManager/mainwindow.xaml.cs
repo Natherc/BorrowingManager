@@ -193,7 +193,7 @@ namespace BorrowingManager
             var row = e.Row;
         }
 
-        private void BorrowItem_Click(object sender, RoutedEventArgs e)
+        private void BorrowUserGrid_Click(object sender, RoutedEventArgs e)
         {
             using (BorrowWindow frm = new BorrowWindow())
             {
@@ -205,6 +205,66 @@ namespace BorrowingManager
                     UpdateUserTerritoryGrid();
 
                 }
+            }
+        }
+
+        private void UpdateUserTerritory_Click(object sender, RoutedEventArgs e)
+        {
+            using (BorrowWindow frm = new BorrowWindow())
+            {
+                UserTerritoryViewModel userToUpdate = GetSelectedElement<UserTerritoryViewModel>(dataHistory);
+
+                frm.Owner = this;
+                frm.SelectedUser = _userBLL.GetById(userToUpdate.UserId);
+                frm.UserTerritoryViewModel = userToUpdate;
+                frm.ShowDialog();
+
+                if (frm.HasClosedAfterHitButtonSave)
+                {
+                    UpdateUserTerritoryGrid();
+
+                }
+
+            }
+        }
+
+        private void BackTerritory_Click(object sender, RoutedEventArgs e)
+        {
+            using (BorrowWindow frm = new BorrowWindow())
+            {
+                UserTerritoryViewModel userToUpdate = GetSelectedElement<UserTerritoryViewModel>(dataHistory);
+
+                frm.Owner = this;
+                frm.SelectedUser = _userBLL.GetById(userToUpdate.UserId);
+                frm.UserTerritoryViewModel = userToUpdate;
+                frm.UserTerritoryViewModel.EndBorrowing = DateTime.Now;
+                frm.ShowDialog();
+
+                if (frm.HasClosedAfterHitButtonSave)
+                {
+                    UpdateUserTerritoryGrid();
+
+                }
+
+            }
+        }
+
+        private void OpenDetails_Click(object sender, RoutedEventArgs e)
+        {
+            Territory t = GetSelectedElement<Territory>(dataTerritory);
+            if (!String.IsNullOrEmpty(t.PathImage))
+            {
+                using (DetailsWindow frm = new DetailsWindow())
+                {
+                    frm.Owner = this;
+                    frm.PathImage = t.PathImage;
+                    frm.ShowDialog();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vous n'avez aucun détail associé à ce territoire", "Attention", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                
             }
         }
     }
