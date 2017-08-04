@@ -29,15 +29,19 @@ namespace BorrowingManager
     {
         private TerritoryBusinessLogic _territoryBLL = new TerritoryBusinessLogic();
         private UserBusinessLogic _userBLL = new UserBusinessLogic();
+        private UserTerritoryBusinessLogic _userTerritoryBLL = new UserTerritoryBusinessLogic();
 
         public MainWindow()
         {
             InitializeComponent();
 
             List<Territory> listTerritory = _territoryBLL.GetAll();
-            List<User> listUser = _userBLL.GetAll();          
-
+            List<User> listUser = _userBLL.GetAll();
+            List<UserTerritory> listUserTerritory = _userTerritoryBLL.GetAll();
+   
+            dataUser.ItemsSource = listUser;     
             dataTerritory.ItemsSource = listTerritory;
+            dataHistory.ItemsSource = _userTerritoryBLL.ConvertToViewModel(listUserTerritory);
             FillAndHideUserGrid();
                   
         }
@@ -47,9 +51,7 @@ namespace BorrowingManager
             dataUser.ItemsSource = null;
             dataUser.Items.Clear();
             List<User> listUser = _userBLL.GetAll();
-            dataUser.ItemsSource = listUser;
-
-            
+            dataUser.ItemsSource = listUser;     
         }
 
        
@@ -78,6 +80,16 @@ namespace BorrowingManager
 
         }
 
+        private void UpdateUserTerritoryGrid()
+        {
+            dataHistory.ItemsSource = null;
+            dataHistory.Items.Clear();
+            List<UserTerritory> listUserTerritory = _userTerritoryBLL.GetAll();
+            dataHistory.ItemsSource = listUserTerritory;
+            dataHistory.Items.Refresh();
+
+        }
+
         private void UpdateUserGrid()
         {
             
@@ -86,47 +98,27 @@ namespace BorrowingManager
 
         }
 
-        private void DeleteItem_Click(object sender, RoutedEventArgs e)
+        private void DeleteTerritory_Click(object sender, RoutedEventArgs e)
         {
-            var menuItem = (MenuItem)sender;
-
-            //Get the ContextMenu to which the menuItem belongs
-            var contextMenu = (ContextMenu)menuItem.Parent;
-
-            //Find the placementTarget
-            var item = (DataGrid)contextMenu.PlacementTarget;
-
-            //Get the underlying item, that you cast to your object that is bound
-            //to the DataGrid (and has subject and state as property)
-            var toDeleteFromBindedList = (Territory)item.SelectedCells[0].Item;
+            Territory territoryToDelete = GetSelectedElement<Territory>(dataTerritory);
 
             if (MessageBox.Show("Etes-vous sûre de vouloir supprimer ce territoire ?", "Attention", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
             {
 
-                _territoryBLL.Delete(toDeleteFromBindedList.Id);
+                _territoryBLL.Delete(territoryToDelete.Id);
 
                 UpdateTerritoryGrid();
             }
 
-            UpdateTerritoryGrid();
+           
 
         }
 
-        private void UpdateItem_Click(object sender, RoutedEventArgs e)
+        private void UpdateTerritory_Click(object sender, RoutedEventArgs e)
         {
             using (territoryWindow frm = new territoryWindow())
             {
-                var menuItem = (MenuItem) sender;
-
-                //Get the ContextMenu to which the menuItem belongs
-                var contextMenu = (ContextMenu) menuItem.Parent;
-
-                //Find the placementTarget
-                var item = (DataGrid) contextMenu.PlacementTarget;
-
-                //Get the underlying item, that you cast to your object that is bound
-                //to the DataGrid (and has subject and state as property)
-                var territoryToUpdate = (Territory)item.SelectedCells[0].Item;
+                Territory territoryToUpdate = GetSelectedElement<Territory>(dataTerritory);
 
                 frm.Owner = this;
                 frm.Territory = territoryToUpdate;
@@ -137,8 +129,17 @@ namespace BorrowingManager
                     UpdateTerritoryGrid();
 
                 }
-                
+
             }
+        }
+
+        private T GetSelectedElement<T>(DataGrid dataGrid)
+        {
+            T itemToUpdate =(T) dataGrid.SelectedCells[0].Item;
+
+            
+
+            return itemToUpdate;
         }
 
         private void addUserButton_Click(object sender, RoutedEventArgs e)
@@ -157,22 +158,11 @@ namespace BorrowingManager
 
         private void DeleteItemUser_Click(object sender, RoutedEventArgs e)
         {
-            var menuItem = (MenuItem)sender;
-
-            //Get the ContextMenu to which the menuItem belongs
-            var contextMenu = (ContextMenu)menuItem.Parent;
-
-            //Find the placementTarget
-            var item = (DataGrid)contextMenu.PlacementTarget;
-
-            //Get the underlying item, that you cast to your object that is bound
-            //to the DataGrid (and has subject and state as property)
-            var toDeleteFromBindedList = (User)item.SelectedCells[0].Item;
+            User userToDelete = GetSelectedElement<User>(dataUser);
 
             if (MessageBox.Show("Etes-vous sûre de vouloir supprimer cet utilisateur ?","Attention",MessageBoxButton.YesNo,MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
-            {
-                
-                _userBLL.Delete(toDeleteFromBindedList.Id);
+            {              
+                _userBLL.Delete(userToDelete.Id);
 
                 UpdateUserGrid();
             }
@@ -183,17 +173,7 @@ namespace BorrowingManager
         {
             using (UserWindow frm = new UserWindow())
             {
-                var menuItem = (MenuItem)sender;
-
-                //Get the ContextMenu to which the menuItem belongs
-                var contextMenu = (ContextMenu)menuItem.Parent;
-
-                //Find the placementTarget
-                var item = (DataGrid)contextMenu.PlacementTarget;
-
-                //Get the underlying item, that you cast to your object that is bound
-                //to the DataGrid (and has subject and state as property)
-                var userToUpdate = (User)item.SelectedCells[0].Item;
+                User userToUpdate = GetSelectedElement<User>(dataUser);
 
                 frm.Owner = this;
                 frm.User = userToUpdate;
@@ -205,6 +185,26 @@ namespace BorrowingManager
 
                 }
 
+            }
+        }
+
+        private void dataTerritory_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            var row = e.Row;
+        }
+
+        private void BorrowItem_Click(object sender, RoutedEventArgs e)
+        {
+            using (BorrowWindow frm = new BorrowWindow())
+            {
+                frm.selectedUser = GetSelectedElement<User>(dataUser);
+                frm.Owner = this;
+                frm.ShowDialog();
+                if (frm.HasClosedAfterHitButtonSave)
+                {
+                    UpdateUserTerritoryGrid();
+
+                }
             }
         }
     }

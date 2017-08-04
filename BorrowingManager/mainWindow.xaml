@@ -5,23 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BorrowingManager"
         mc:Ignorable="d"
-        Title="BorrowManager" Height="500" Width="900">
-    <Grid x:Name="windowGrid" Margin="0,0,-6.6,-0.2">
-        <DataGrid x:Name="dataTerritory" Margin="10,41,538.2,9.6" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Height="420">
+        Title="BorrowManager" Height="579.2" Width="1251.6" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#FF403C3C" BorderBrush="#FFB19C9C">
+    <Window.Foreground>
+        <ImageBrush/>
+    </Window.Foreground>
+    <Grid x:Name="windowGrid" Margin="10,0,15.6,-0.4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="529*"/>
+            <ColumnDefinition Width="35*"/>
+            <ColumnDefinition Width="39*"/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="dataTerritory" Margin="-7,41,786.6,0" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="False" EnableRowVirtualization="False" LoadingRow="dataTerritory_LoadingRow" CanUserAddRows="false" VerticalAlignment="Top">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Width="*" Binding="{Binding Path=Id}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="N°" Width="*" Binding="{Binding Path=Number}"/>
+                <DataGridTextColumn Header="Localité" Width="*" Binding="{Binding Path=Locality}"/>
+            </DataGrid.Columns>
             <DataGrid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="Supprimer" Click="DeleteItem_Click" />
+                    <MenuItem Header="Supprimer" Click="DeleteTerritory_Click" />
                     <Separator />
                     <MenuItem Header="Ajouter" Click="addTerritoryButton_Click"/>
                     <Separator/>
-                    <MenuItem Header="Modifier" Click="UpdateItem_Click"/>
+                    <MenuItem Header="Modifier" Click="UpdateTerritory_Click"/>
                     <Separator/>
                     <MenuItem Header="Détails" />
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
         <Label x:Name="connectLabel" Content="" HorizontalAlignment="Left" Margin="10,447,0,0" VerticalAlignment="Top" Width="858" FontFamily="Sitka Small" Height="30"/>
-        <DataGrid x:Name="dataUser" Margin="367,41,253.2,9.6" RenderTransformOrigin="0.5,0.5" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="False">
+        <DataGrid x:Name="dataUser" Margin="288,41,406.6,0" RenderTransformOrigin="0.5,0.5" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="False" CanUserAddRows="false" VerticalAlignment="Top">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Width="*" Binding="{Binding Path=Id}" Visibility="Hidden"/>
                 <DataGridTextColumn Header="Nom" Width="*" Binding="{Binding Path=Lastname}"/>
@@ -35,11 +49,22 @@
                     <MenuItem Header="Ajouter" Click="addUserButton_Click"/>
                     <Separator/>
                     <MenuItem Header="Modifier" Click="UpdateItemUser_Click"/>
+                    <Separator/>
+                    <MenuItem Header="Emprunter" Click="BorrowItem_Click"/>
                 </ContextMenu>
             </DataGrid.ContextMenu>
         </DataGrid>
-        <DataGrid x:Name="dataHistory" Margin="652,41,10,9.6" RenderTransformOrigin="0.5,0.5" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"/>
-        <Button x:Name="addTerritoryButton" Content="Ajouter Territoire" HorizontalAlignment="Left" Margin="262,11,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.067,0.183" Height="20" Click="addTerritoryButton_Click"/>
-        <Button x:Name="addUserButton" Content="Ajouter Utilisateur" HorizontalAlignment="Left" Margin="547,11,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.067,0.183" Height="20" Click="addUserButton_Click"/>
+        <DataGrid x:Name="dataHistory" Margin="668,41,-11.8,9" RenderTransformOrigin="0.5,0.5" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="False" Grid.ColumnSpan="4" CanUserAddRows="false" VerticalAlignment="Top" Background="White" BorderBrush="#FF6CACEA">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="N°" Width="*" Binding="{Binding Path=Number}"/>
+                <DataGridTextColumn Header="Id" Width="*" Binding="{Binding Path=Id}" Visibility="Hidden"/>
+                <DataGridTextColumn Header="Nom" Width="*" Binding="{Binding Path=Lastname}"/>
+                <DataGridTextColumn Header="Prénom" Width="*" Binding="{Binding Path=Name}"/>
+                <DataGridTextColumn Header="Début" Width="*" Binding="{Binding Path=BeginBorrowing}"/>
+                <DataGridTextColumn Header="Fin" Width="*" Binding="{Binding Path=EndBorrowing}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="addTerritoryButton" Content="Ajouter Territoire" HorizontalAlignment="Left" Margin="183,11,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.067,0.183" Height="20" Click="addTerritoryButton_Click"/>
+        <Button x:Name="addUserButton" Content="Ajouter Utilisateur" HorizontalAlignment="Left" Margin="557,11,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.067,0.183" Height="20" Click="addUserButton_Click"/>
     </Grid>
 </Window>

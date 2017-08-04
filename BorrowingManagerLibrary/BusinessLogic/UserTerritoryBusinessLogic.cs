@@ -1,5 +1,6 @@
 ﻿using BorrowingManagerLibrary.DataLayer;
 using BorrowingManagerLibrary.Models;
+using BorrowingManagerLibrary.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,48 @@ namespace BorrowingManagerLibrary.BusinessLogic
         public List<UserTerritory> GetAll()
         {
             return _territoryDL.GetAll();
+        }
+
+        public List<UserTerritoryViewModel> ConvertToViewModel(List<UserTerritory> users)
+        {
+            List<UserTerritoryViewModel> usersViewModel = new List<UserTerritoryViewModel>();
+            UserBusinessLogic userBLL = new UserBusinessLogic();
+            TerritoryBusinessLogic territoryBLL = new TerritoryBusinessLogic();
+
+            if (users != null)
+            {
+                foreach (UserTerritory userTerritory in users)
+                {
+                    UserTerritoryViewModel u = new UserTerritoryViewModel();
+                    u.Id = userTerritory.Id;
+                    u.TerritoryId = userTerritory.TerritoryId;
+                    u.UserId = userTerritory.UserId;
+                    u.BeginBorrowing = userTerritory.BeginBorrowing;
+                    u.EndBorrowing = userTerritory.EndBorrowing;
+                    u.IsDeleted = userTerritory.IsDeleted;
+
+                    Territory territory = territoryBLL.GetById(userTerritory.Id);
+                    if(territory != null)
+                    {
+                        u.TerritoryName = territory.Locality;
+                        u.TerritoryNumber = territory.Number;
+                    }
+
+                    User user = userBLL.GetById(userTerritory.UserId);
+                    if(user != null)
+                    {
+                        u.UserName = user.Name;
+                        u.UserLastname = user.Lastname;
+                        u.UserMail = user.Mail;
+                    }
+                    
+
+                    usersViewModel.Add(u);
+
+                }   
+            }
+
+            return usersViewModel;
         }
 
         public ResultViewModel Insert(UserTerritory t)

@@ -11,7 +11,7 @@ namespace BorrowingManagerLibrary.Models
         public int Id { get; set; }
         public int TerritoryId { get; set; }
         public int UserId { get; set; }
-        public DateTime BeginBorrowing { get; set; }
+        public DateTime? BeginBorrowing { get; set; }
         public DateTime? EndBorrowing { get; set; }
         public bool IsDeleted { get; set; }
     }

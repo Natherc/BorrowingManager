@@ -52,7 +52,8 @@ namespace BorrowingManager
         private void button_Click(object sender, RoutedEventArgs e)
         {
             TerritoryBusinessLogic bll = new TerritoryBusinessLogic();
-            
+
+            var test = this.Tag;
 
             ResultViewModel result = new ResultViewModel(); ;
 
